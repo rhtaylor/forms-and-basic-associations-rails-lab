@@ -4,11 +4,9 @@
 <h1>title:<%= f.text_field :title %></h1>
 <h1>artist name:<%= f.text_field :artist_name %></h1>
 <%= f.collection_select( :genre_id, @genres , :id, :name) %>
-<%= f.fields_for Note.new do |notes| %>
-<%= notes.fields_for :attributes do |content| %>  
+<input name="song[note_contents][]" id="song_notes_attributes_0_content">
+  <input name="song[note_contents][]" id="song_notes_attributes_1_content">
+  <input name="song[note_contents][]" id="song_notes_attributes_2_content">
 
-<%= content.text_field :content %>
-<% end %>
-<% end %>
 <%= f.submit %>
 <% end %>

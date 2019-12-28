@@ -5,12 +5,13 @@ class Song < ActiveRecord::Base
   belongs_to :genre 
   
   has_many :notes 
-  accepts_nested_attributes_for :artist, :notes, :genre 
+ # accepts_nested_attributes_for :artist, :notes, :genre 
 
 
   def artist_name 
-    if artist 
-    artist = Artist.find_by(name: artist.name )
+
+    if self.artist_id
+    artist = Artist.find_by(id: self.artist_id )
     artist.name
     end
     
@@ -25,6 +26,17 @@ class Song < ActiveRecord::Base
     def genre_name 
       self.genre = Genre.find_by(id: genre_id) 
       self.genre.artist_name
-    end 
+    end  
 
+    def note_contents=(contents)
+        contents.each do |content|  
+            if !(content.empty?)
+            self.notes.new(content: content) 
+            end
+        end
+    end
+
+    def note_contents 
+        self.notes.map{ |note| note.content }
+    end
 end
